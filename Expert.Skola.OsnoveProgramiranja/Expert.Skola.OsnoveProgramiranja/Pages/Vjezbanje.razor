@@ -1,0 +1,59 @@
+﻿@page "/vjezba"
+
+<h3>Vjezbanje</h3>
+<form>
+    <label for="Ime">Vaše ime</label>
+    <input id="Ime" type="text" @bind-value="Ime" class="input-group-text" placeholder="Upiši ime" />
+    <br />
+    <label for="Prezime">Vaše prezime</label>
+    <input id="Prezime" type="text" @bind-value="Prezime" class="input-group-text" placeholder="Upišite prezime" />
+    <button type="button" @onclick="Dohvati">Pošalji</button>
+
+</form>
+<label for="PrviInput">Upiši prvi broj</label>
+<input id="PrviInput" @bind-value="PrviBroj" type="text" />
+<br />
+<label for="DrugiBroj">Upiši drugi broj</label>
+<input id="DrugiBroj" @bind-value="DrugiBroj" type="text" />
+<br />
+<button type="button" @onclick="Zbroji">Zbroji</button>
+<p>
+    @mojPrimjer
+</p>
+
+<p>
+    Rezultat zbrajanja je: @ZbrojBrojeva
+</p>
+
+@Greska
+
+@code {
+    private string Ime="Marko";
+    private string Prezime="Markić";
+    private string mojPrimjer="";
+    private string PrviBroj;
+    private string DrugiBroj;
+    private decimal ZbrojBrojeva;
+    private string Greska;
+
+    public async Task Dohvati()
+    {
+        //mojPrimjer ="Dobro došli "+ Ime +" "+ Prezime + "Na našu stranicu";
+        mojPrimjer =$"Dobro došli {Ime} {Prezime} na našu stranicu";
+    }
+
+    public async Task Zbroji()
+    {
+        var jelInteger= int.TryParse(PrviBroj, out var broj);
+        var jelDrugiInteger = decimal.TryParse(DrugiBroj, out var broj2);
+        if (jelInteger == true && jelDrugiInteger==true)
+        {
+            ZbrojBrojeva = Convert.ToInt32(PrviBroj) + Convert.ToDecimal(DrugiBroj);
+        }
+        else
+        {
+            Greska = "upisali ste tekst a ne broj.";
+        }
+    }
+
+}
